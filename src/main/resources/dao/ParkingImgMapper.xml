@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liusuizhu.page.dao.ParkingImgMapper">
+  <resultMap id="BaseResultMap" type="com.liusuizhu.page.model.ParkingImg">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="car_img" jdbcType="VARCHAR" property="carImg" />
+    <result column="parking_type" jdbcType="INTEGER" property="parkingType" />
+    <result column="parking_id" jdbcType="INTEGER" property="parkingId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, car_img, parking_type, parking_id, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from qyzd_parking_img
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from qyzd_parking_img
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.liusuizhu.page.model.ParkingImg">
+    insert into qyzd_parking_img (id, car_img, parking_type, 
+      parking_id, create_time)
+    values (#{id,jdbcType=INTEGER}, #{carImg,jdbcType=VARCHAR}, #{parkingType,jdbcType=INTEGER}, 
+      #{parkingId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.liusuizhu.page.model.ParkingImg" useGeneratedKeys="true" keyProperty="id">
+    insert into qyzd_parking_img
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="carImg != null">
+        car_img,
+      </if>
+      <if test="parkingType != null">
+        parking_type,
+      </if>
+      <if test="parkingId != null">
+        parking_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="carImg != null">
+        #{carImg,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingType != null">
+        #{parkingType,jdbcType=INTEGER},
+      </if>
+      <if test="parkingId != null">
+        #{parkingId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.liusuizhu.page.model.ParkingImg">
+    update qyzd_parking_img
+    <set>
+      <if test="carImg != null">
+        car_img = #{carImg,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingType != null">
+        parking_type = #{parkingType,jdbcType=INTEGER},
+      </if>
+      <if test="parkingId != null">
+        parking_id = #{parkingId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.liusuizhu.page.model.ParkingImg">
+    update qyzd_parking_img
+    set car_img = #{carImg,jdbcType=VARCHAR},
+      parking_type = #{parkingType,jdbcType=INTEGER},
+      parking_id = #{parkingId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!-- 批量插入 -->
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into qyzd_parking_img (car_img, parking_type, parking_id)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.carImg,jdbcType=VARCHAR}, #{item.parkingType,jdbcType=INTEGER},#{item.parkingId,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+</mapper>

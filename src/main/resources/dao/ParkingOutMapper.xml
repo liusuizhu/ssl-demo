@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liusuizhu.page.dao.ParkingOutMapper">
+  <resultMap id="BaseResultMap" type="com.liusuizhu.page.model.ParkingOut">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="car_number" jdbcType="VARCHAR" property="carNumber" />
+    <result column="parking_id" jdbcType="INTEGER" property="parkingId" />
+    <result column="cost" jdbcType="DECIMAL" property="cost" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="col_status" jdbcType="INTEGER" property="colStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, car_number, parking_id, cost, create_time, update_time, col_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from qyzd_parking_out
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from qyzd_parking_out
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.liusuizhu.page.model.ParkingOut">
+    insert into qyzd_parking_out (id, car_number, parking_id, 
+      cost, create_time, update_time, 
+      col_status)
+    values (#{id,jdbcType=INTEGER}, #{carNumber,jdbcType=VARCHAR}, #{parkingId,jdbcType=INTEGER}, 
+      #{cost,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{colStatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.liusuizhu.page.model.ParkingOut" useGeneratedKeys="true" keyProperty="id">
+    insert into qyzd_parking_out
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="carNumber != null">
+        car_number,
+      </if>
+      <if test="parkingId != null">
+        parking_id,
+      </if>
+      <if test="cost != null">
+        cost,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="colStatus != null">
+        col_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="carNumber != null">
+        #{carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingId != null">
+        #{parkingId,jdbcType=INTEGER},
+      </if>
+      <if test="cost != null">
+        #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="colStatus != null">
+        #{colStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.liusuizhu.page.model.ParkingOut">
+    update qyzd_parking_out
+    <set>
+      <if test="carNumber != null">
+        car_number = #{carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingId != null">
+        parking_id = #{parkingId,jdbcType=INTEGER},
+      </if>
+      <if test="cost != null">
+        cost = #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="colStatus != null">
+        col_status = #{colStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.liusuizhu.page.model.ParkingOut">
+    update qyzd_parking_out
+    set car_number = #{carNumber,jdbcType=VARCHAR},
+      parking_id = #{parkingId,jdbcType=INTEGER},
+      cost = #{cost,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      col_status = #{colStatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

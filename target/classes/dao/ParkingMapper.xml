@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liusuizhu.page.dao.ParkingMapper">
+  <resultMap id="BaseResultMap" type="com.liusuizhu.page.model.Parking">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="parking" jdbcType="VARCHAR" property="parking" />
+    <result column="parking_lot_number" jdbcType="INTEGER" property="parkingLotNumber" />
+    <result column="occupy_parking_lot" jdbcType="INTEGER" property="occupyParkingLot" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="col_status" jdbcType="INTEGER" property="colStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, parking, parking_lot_number, occupy_parking_lot, create_time, update_time, col_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from qyzd_parking
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from qyzd_parking
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.liusuizhu.page.model.Parking">
+    insert into qyzd_parking (id, parking, parking_lot_number, 
+      occupy_parking_lot, create_time, update_time, 
+      col_status)
+    values (#{id,jdbcType=INTEGER}, #{parking,jdbcType=VARCHAR}, #{parkingLotNumber,jdbcType=INTEGER}, 
+      #{occupyParkingLot,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{colStatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.liusuizhu.page.model.Parking" useGeneratedKeys="true" keyProperty="id">
+    insert into qyzd_parking
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="parking != null">
+        parking,
+      </if>
+      <if test="parkingLotNumber != null">
+        parking_lot_number,
+      </if>
+      <if test="occupyParkingLot != null">
+        occupy_parking_lot,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="colStatus != null">
+        col_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="parking != null">
+        #{parking,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingLotNumber != null">
+        #{parkingLotNumber,jdbcType=INTEGER},
+      </if>
+      <if test="occupyParkingLot != null">
+        #{occupyParkingLot,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="colStatus != null">
+        #{colStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.liusuizhu.page.model.Parking">
+    update qyzd_parking
+    <set>
+      <if test="parking != null">
+        parking = #{parking,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingLotNumber != null">
+        parking_lot_number = #{parkingLotNumber,jdbcType=INTEGER},
+      </if>
+      <if test="occupyParkingLot != null">
+        occupy_parking_lot = #{occupyParkingLot,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="colStatus != null">
+        col_status = #{colStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.liusuizhu.page.model.Parking">
+    update qyzd_parking
+    set parking = #{parking,jdbcType=VARCHAR},
+      parking_lot_number = #{parkingLotNumber,jdbcType=INTEGER},
+      occupy_parking_lot = #{occupyParkingLot,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      col_status = #{colStatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!-- 所有停车场信息 -->
+  <select id="parkingLotList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from qyzd_parking
+    where col_status = 1
+    LIMIT #{startPage}, #{pageSize}
+  </select>
+
+  <!-- 更新占用车位 -->
+  <update id="updateByOccupyParkingLot">
+    update qyzd_parking
+    set occupy_parking_lot = #{occupyParkingLot,jdbcType=INTEGER},
+      update_time = CURRENT_TIMESTAMP
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
